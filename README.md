@@ -24,20 +24,19 @@ On **Kali Linux**, this is **required**.
 
 2.  **Create and activate a virtual environment:**
 
-    *On Kali / Linux:*
+    On Kali / Linux:
     ```bash
     python3 -m venv venv
     source venv/bin/activate
     ```
 
-    *On Windows:*
+    On Windows:
     ```bash
     python -m venv venv
     .\venv\Scripts\activate
     ```
 
 3.  **Install the required libraries:**
-    (Once the virtual environment is active)
     ```bash
     pip install -r requirements.txt
     ```
@@ -68,6 +67,7 @@ python fim.py --init ./path/to/your/directory
 <img width="496" height="170" alt="fim3" src="https://github.com/user-attachments/assets/f7af3da9-ca2e-4527-9f55-5ece9b7fa8db" />
 
 ---
+
 
 
 
