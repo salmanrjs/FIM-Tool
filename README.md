@@ -13,13 +13,31 @@ A simple, command-line File Integrity Monitor (FIM) built in Python. This tool s
 
 ## Installation
 
+It is **highly recommended** to install the packages in a virtual environment (`venv`).
+On **Kali Linux**, this is **required**.
+
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/salmanrjs/FIM-Tool
+    git clone [https://github.com/salmanrjs/FIM-Tool.git](https://github.com/salmanrjs/FIM-Tool.git)
     cd FIM-Tool
     ```
 
-2.  **Install the required libraries:**
+2.  **Create and activate a virtual environment:**
+
+    *On Kali / Linux:*
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+
+    *On Windows:*
+    ```bash
+    python -m venv venv
+    .\venv\Scripts\activate
+    ```
+
+3.  **Install the required libraries:**
+    (Once the virtual environment is active)
     ```bash
     pip install -r requirements.txt
     ```
@@ -50,6 +68,7 @@ python fim.py --init ./path/to/your/directory
 <img width="496" height="170" alt="fim3" src="https://github.com/user-attachments/assets/f7af3da9-ca2e-4527-9f55-5ece9b7fa8db" />
 
 ---
+
 
 
 
