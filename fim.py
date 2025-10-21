@@ -1,18 +1,18 @@
-
 import os
 import pyfiglet
 import hashlib  # Needed for calculating file hashes
 import argparse  # Needed for handling command-line arguments (like --init, --check)
-import json  # Needed for saving and loading the baseline file
-import colorama  # Needed for terminal colors
+import json  
+import colorama  
 from colorama import Fore, Style
 
 #  Colors
 colorama.init(autoreset=True)
 
-# -- Settings 
-BANNER_TEXT = "F     I     M"  # Banner text with spaces as requested
-BASELINE_FILE = 'baseline.json'  # Our database file to store hashes
+# -- Settings
+BANNER_TEXT = "F     I     M"  
+
+BASELINE_FILENAME = ".baseline" 
 
 
 def print_banner():
@@ -38,7 +38,7 @@ def calculate_hash(filepath):
 
             while chunk := f.read(65536):
                 sha256_hash.update(chunk)
-        return sha256_hash.hexdigest()  # Get the final hash string
+        return sha256_hash.hexdigest() 
 
     except IOError as e:
 
@@ -49,15 +49,21 @@ def calculate_hash(filepath):
         return None
 
 
+
 def initialize_baseline(target_directory):
 
     baseline = {}  # Create an empty dictionary to store hashes
     file_count = 0
-    print(Fore.CYAN + f"[*] Scanning files in {target_directory}...")
 
+    baseline_path = os.path.join(target_directory, BASELINE_FILENAME)
+
+    print(Fore.CYAN + f"[*] Scanning files in {target_directory}...")
 
     for root, dirs, files in os.walk(target_directory):
         for file in files:
+
+            if file == BASELINE_FILENAME:
+                continue
 
             file_path = os.path.join(root, file)
             file_hash = calculate_hash(file_path)
@@ -69,28 +75,40 @@ def initialize_baseline(target_directory):
                 print(f"[+] Hashed: {file_path}")
 
     try:
-        with open(BASELINE_FILE, 'w') as f:
-
+    
+        with open(baseline_path, 'w') as f:
             json.dump(baseline, f, indent=4)
-
+        
+ 
+        if os.name == 'nt': # Windows os
+            try:
+             
+                os.system(f'attrib +h "{baseline_path}"')
+            except Exception as e:
+                print(Fore.YELLOW + f"[Warning] Could not hide baseline file on Windows: {e}")
+        
         print("\n" + Fore.GREEN + Style.BRIGHT + "[SUCCESS] Baseline created!")
-        print(Fore.GREEN + f"[*] Saved hashes for {file_count} files to {BASELINE_FILE}")
+        print(Fore.GREEN + f"[*] Saved hashes for {file_count} files to {baseline_path}")
 
     except Exception as e:
         print("\n" + Fore.RED + Style.BRIGHT + f"[FATAL ERROR] Could not write baseline file!")
         print(Fore.RED + f"[*] Reason: {e}")
 
 
+
 def check_integrity(target_directory):
 
-    # 1 - Load the saved baseline
+    # Define the full path for the baseline file (inside the target directory)
+    baseline_path = os.path.join(target_directory, BASELINE_FILENAME)
+
+    # 1 - Load the saved baseline (from the new path)
     try:
-        with open(BASELINE_FILE, 'r') as f:
+        with open(baseline_path, 'r') as f:
             # Load the hashes from the JSON file into a dictionary
             baseline = json.load(f)
-        print(Fore.GREEN + f"[*] Successfully loaded baseline from {BASELINE_FILE}")
+        print(Fore.GREEN + f"[*] Successfully loaded baseline from {baseline_path}")
     except FileNotFoundError:
-        print(Fore.RED + f"[!] Error: Baseline file '{BASELINE_FILE}' not found.")
+        print(Fore.RED + f"[!] Error: Baseline file '{BASELINE_FILENAME}' not found in {target_directory}")
         print(Fore.YELLOW + f"[*] Please run '--init {target_directory}' first.")
         return
     except Exception as e:
@@ -103,6 +121,11 @@ def check_integrity(target_directory):
 
     for root, dirs, files in os.walk(target_directory):
         for file in files:
+            # --- This is new ---
+            # We must skip our own baseline file!
+            if file == BASELINE_FILENAME:
+                continue
+
             file_path = os.path.join(root, file)
             file_hash = calculate_hash(file_path)
             if file_hash:
@@ -143,10 +166,10 @@ def check_integrity(target_directory):
         print(Fore.YELLOW + Style.BRIGHT + "\n[!] NEW FILES (SUSPICIOUS):")
         for file_path in new_files:
             print(f"  - {file_path}")
-
+            
     if deleted_files:
-        print(Fore.RED + Style.BRIGHT + "\n[!] DELETED FILES (NOTICE):")
-        for file_path in new_files:
+        print(Fore.YELLOW + Style.BRIGHT + "\n[!] DELETED FILES (NOTICE):")
+        for file_path in deleted_files:
             print(f"  - {file_path}")
 
 
@@ -156,7 +179,7 @@ def main():
 
     parser = argparse.ArgumentParser(
         description="A simple File Integrity Monitor.",
-        add_help=False  # Disable the default help
+        add_help=False
     )
 
     parser.add_argument('--init', metavar='DIR', help='Initialize a new baseline for a directory.')
@@ -182,7 +205,7 @@ def main():
         print(f"[+] Starting integrity check for: {target_directory}")
         check_integrity(target_directory)
 
-    # If no command is given, print our custom usage screen
+    
     else:
         print(Fore.CYAN + Style.BRIGHT + "Usage: python fim.py [COMMAND] [DIRECTORY]")
         print("\n" + Style.BRIGHT + "Available Commands:")
