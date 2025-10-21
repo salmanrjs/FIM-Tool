@@ -1,3 +1,4 @@
+
 import os
 import pyfiglet
 import hashlib  # Needed for calculating file hashes
@@ -22,7 +23,7 @@ def print_banner():
 
     # Print tool information
     print(Style.BRIGHT + "======================================================")
-    print(Style.BRIGHT + "      File Integrity Monitor (FIM) v0.1")
+    print(Style.BRIGHT + "      File Integrity Monitor (FIM) v1.0")
     print(Style.BRIGHT + "      Developed by: [Salman Rajab]")
     print(Style.BRIGHT + "======================================================")
     print("\n")
