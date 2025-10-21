@@ -28,7 +28,7 @@ A simple, command-line File Integrity Monitor (FIM) built in Python. This tool s
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/your-username/FIM-Tool.git](https://github.com/your-username/FIM-Tool.git)
+    git clone [https://github.com/salmanrjs/FIM-Tool](https://github.com/salmanrjs/FIM-Tool)
     cd FIM-Tool
     ```
 
@@ -48,4 +48,5 @@ The tool has two modes: `--init` and `--check`.
 Use this command one time to create the `baseline.json` file for a directory.
 
 ```bash
+
 python fim.py --init ./path/to/your/directory
