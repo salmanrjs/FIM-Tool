@@ -10,7 +10,7 @@ from colorama import Fore, Style
 #  Colors
 colorama.init(autoreset=True)
 
-# --- Settings ---
+# -- Settings 
 BANNER_TEXT = "F     I     M"  # Banner text with spaces as requested
 BASELINE_FILE = 'baseline.json'  # Our database file to store hashes
 
@@ -197,4 +197,5 @@ def main():
 
 
 if __name__ == "__main__":
+
     main()
