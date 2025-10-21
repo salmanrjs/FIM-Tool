@@ -1,4 +1,3 @@
-
 import os
 import pyfiglet
 import hashlib  # Needed for calculating file hashes
@@ -66,7 +65,7 @@ def initialize_baseline(target_directory):
 
                 baseline[file_path] = file_hash
                 file_count += 1
-                print(f"  [+] Hashed: {file_path}")
+                print(f"[+] Hashed: {file_path}")
 
     try:
         with open(BASELINE_FILE, 'w') as f:
@@ -145,7 +144,7 @@ def check_integrity(target_directory):
             print(f"  - {file_path}")
 
     if deleted_files:
-        print(Fore.YELLOW + Style.BRIGHT + "\n[!] DELETED FILES (NOTICE):")
+        print(Fore.RED + Style.BRIGHT + "\n[!] DELETED FILES (NOTICE):")
         for file_path in new_files:
             print(f"  - {file_path}")
 
