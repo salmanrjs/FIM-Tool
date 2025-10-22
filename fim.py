@@ -2,21 +2,20 @@ import os
 import pyfiglet
 import hashlib  # Needed for calculating file hashes
 import argparse  # Needed for handling command-line arguments (like --init, --check)
-import json  
-import colorama  
+import json
+import colorama
 from colorama import Fore, Style
 
 #  Colors
 colorama.init(autoreset=True)
 
 # -- Settings
-BANNER_TEXT = "F     I     M"  
+BANNER_TEXT = "F     I     M"
 
-BASELINE_FILENAME = ".baseline" 
+BASELINE_FILENAME = ".baseline"
 
 
 def print_banner():
-
     banner = pyfiglet.figlet_format(BANNER_TEXT)
 
     print(Fore.RED + banner)
@@ -30,7 +29,6 @@ def print_banner():
 
 
 def calculate_hash(filepath):
-
     sha256_hash = hashlib.sha256()  # Create a new SHA-256 hash object
     try:
         # Open the file in binary read mode ('rb')
@@ -38,7 +36,7 @@ def calculate_hash(filepath):
 
             while chunk := f.read(65536):
                 sha256_hash.update(chunk)
-        return sha256_hash.hexdigest() 
+        return sha256_hash.hexdigest()
 
     except IOError as e:
 
@@ -49,9 +47,7 @@ def calculate_hash(filepath):
         return None
 
 
-
 def initialize_baseline(target_directory):
-
     baseline = {}  # Create an empty dictionary to store hashes
     file_count = 0
 
@@ -69,24 +65,22 @@ def initialize_baseline(target_directory):
             file_hash = calculate_hash(file_path)
 
             if file_hash:
-
                 baseline[file_path] = file_hash
                 file_count += 1
                 print(f"[+] Hashed: {file_path}")
 
     try:
-    
+
         with open(baseline_path, 'w') as f:
             json.dump(baseline, f, indent=4)
-        
- 
-        if os.name == 'nt': # Windows os
+
+        if os.name == 'nt':  # Windows os
             try:
-             
+
                 os.system(f'attrib +h "{baseline_path}"')
             except Exception as e:
                 print(Fore.YELLOW + f"[Warning] Could not hide baseline file on Windows: {e}")
-        
+
         print("\n" + Fore.GREEN + Style.BRIGHT + "[SUCCESS] Baseline created!")
         print(Fore.GREEN + f"[*] Saved hashes for {file_count} files to {baseline_path}")
 
@@ -95,9 +89,7 @@ def initialize_baseline(target_directory):
         print(Fore.RED + f"[*] Reason: {e}")
 
 
-
 def check_integrity(target_directory):
-
     # Define the full path for the baseline file (inside the target directory)
     baseline_path = os.path.join(target_directory, BASELINE_FILENAME)
 
@@ -147,7 +139,6 @@ def check_integrity(target_directory):
     modified_files = []
     for file_path in common_files:
         if baseline[file_path] != current_hashes[file_path]:
-
             modified_files.append(file_path)
 
     # 4 - Print the final report
@@ -166,15 +157,14 @@ def check_integrity(target_directory):
         print(Fore.YELLOW + Style.BRIGHT + "\n[!] NEW FILES (SUSPICIOUS):")
         for file_path in new_files:
             print(f"  - {file_path}")
-            
+
     if deleted_files:
-        print(Fore.YELLOW + Style.BRIGHT + "\n[!] DELETED FILES (NOTICE):")
+        print(Fore.RED + Style.BRIGHT + "\n[!] DELETED FILES (NOTICE):")
         for file_path in deleted_files:
             print(f"  - {file_path}")
 
 
 def main():
-
     print_banner()
 
     parser = argparse.ArgumentParser(
@@ -184,7 +174,6 @@ def main():
 
     parser.add_argument('--init', metavar='DIR', help='Initialize a new baseline for a directory.')
     parser.add_argument('--check', metavar='DIR', help='Check a directory against the baseline.')
-
 
     args = parser.parse_args()
 
@@ -205,7 +194,7 @@ def main():
         print(f"[+] Starting integrity check for: {target_directory}")
         check_integrity(target_directory)
 
-    
+
     else:
         print(Fore.CYAN + Style.BRIGHT + "Usage: python fim.py [COMMAND] [DIRECTORY]")
         print("\n" + Style.BRIGHT + "Available Commands:")
@@ -213,12 +202,10 @@ def main():
         print(Fore.GREEN + "  --init   <DIR>" + Style.RESET_ALL + "       Initialize a new baseline for a directory.")
         print(Fore.GREEN + "  --check  <DIR>" + Style.RESET_ALL + "       Check a directory against the baseline.")
 
-
         print(Style.BRIGHT + "\nExamples:")
         print("  python fim.py --init ./important_files")
         print("  python fim.py --check ./important_files")
 
 
 if __name__ == "__main__":
-
     main()
