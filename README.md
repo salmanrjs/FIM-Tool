@@ -60,13 +60,15 @@ python fim.py --init ./path/to/your/directory
 
 ## Screenshots
 
-<img width="543" height="400" alt="fim7" src="https://github.com/user-attachments/assets/e31ade0d-3030-4aa6-91ff-85cf5e774459" />
+
+<img width="534" height="396" alt="fim_tool" src="https://github.com/user-attachments/assets/25a56c1c-6d3b-4664-aede-9d8acedf1d70" />
 
 ---
 
 <img width="496" height="170" alt="fim3" src="https://github.com/user-attachments/assets/f7af3da9-ca2e-4527-9f55-5ece9b7fa8db" />
 
 ---
+
 
 
 
