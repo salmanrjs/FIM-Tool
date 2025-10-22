@@ -65,11 +65,11 @@ python fim.py --init ./path/to/your/directory
 
 ---
 
-<img width="496" height="170" alt="fim3" src="https://github.com/user-attachments/assets/f7af3da9-ca2e-4527-9f55-5ece9b7fa8db" />
+![fimtool](https://github.com/user-attachments/assets/7b3c33f4-3877-4d20-94dd-4608c6790c6c)
 
 ---
 
-![fimtool](https://github.com/user-attachments/assets/7b3c33f4-3877-4d20-94dd-4608c6790c6c)
+
 
 
 
