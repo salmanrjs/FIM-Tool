@@ -69,6 +69,8 @@ python fim.py --init ./path/to/your/directory
 
 ---
 
+![fimtool](https://github.com/user-attachments/assets/7b3c33f4-3877-4d20-94dd-4608c6790c6c)
+
 
 
 
