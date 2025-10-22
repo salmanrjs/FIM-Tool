@@ -90,13 +90,12 @@ def initialize_baseline(target_directory):
 
 
 def check_integrity(target_directory):
-    # Define the full path for the baseline file (inside the target directory)
+ 
     baseline_path = os.path.join(target_directory, BASELINE_FILENAME)
 
     # 1 - Load the saved baseline (from the new path)
     try:
         with open(baseline_path, 'r') as f:
-            # Load the hashes from the JSON file into a dictionary
             baseline = json.load(f)
         print(Fore.GREEN + f"[*] Successfully loaded baseline from {baseline_path}")
     except FileNotFoundError:
@@ -113,8 +112,7 @@ def check_integrity(target_directory):
 
     for root, dirs, files in os.walk(target_directory):
         for file in files:
-            # --- This is new ---
-            # We must skip our own baseline file!
+            
             if file == BASELINE_FILENAME:
                 continue
 
@@ -129,9 +127,9 @@ def check_integrity(target_directory):
     baseline_files = set(baseline.keys())
     current_files = set(current_hashes.keys())
 
-    # Files that are in the baseline but NOT on the disk now
+    # Files that are in the baseline but not on the disk now
     deleted_files = baseline_files - current_files
-    # Files that are on the disk now but NOT in the baseline
+    # Files that are on the disk now but not in the baseline
     new_files = current_files - baseline_files
     # Files that are in both, we need to check their hashes
     common_files = baseline_files.intersection(current_files)
@@ -209,4 +207,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
