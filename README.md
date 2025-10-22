@@ -1,4 +1,4 @@
-# FIM - File Integrity Monitor
+# FIM - File Integrity Monitor v1.0
 
 A simple, command-line File Integrity Monitor (FIM) built in Python. This tool scans a directory, creates a baseline of SHA-256 hashes, and detects any modifications, additions, or deletions to the files.
 
@@ -67,6 +67,7 @@ python fim.py --init ./path/to/your/directory
 <img width="496" height="170" alt="fim3" src="https://github.com/user-attachments/assets/f7af3da9-ca2e-4527-9f55-5ece9b7fa8db" />
 
 ---
+
 
 
 
