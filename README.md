@@ -19,7 +19,7 @@ On **Kali Linux**, this is **required**.
 1.  **Clone the repository:**
     ```bash
     git clone https://github.com/salmanrjs/FIM-Tool.git
-    cd fim-Tool
+    cd FIM-Tool
     ```
 
 2.  **Create and activate a virtual environment:**
@@ -68,6 +68,7 @@ python fim.py --init ./path/to/your/directory
 ![fimtool](https://github.com/user-attachments/assets/7b3c33f4-3877-4d20-94dd-4608c6790c6c)
 
 ---
+
 
 
 
